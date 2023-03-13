@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load sidebar %}
+
+{% block title  %}
+    {{ post.title }} -- {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+        <section class="single-blog-area wrap">
+
+            <div class="blog-area">
+                <div class="blog-area__introduction">
+                    <h2 class="blog-area__title">{{ post.title }}</h2>
+                    <div class="blog-area__text">
+                        <div>
+                            <span>|Category: <a href="{{ post.category.get_absolute_url }}">
+                                {{ post.category }}
+                            </a></span>
+                            <br>
+                            {% if post.tags %}
+                                <span>
+                                    Tags:
+                                    {% for tag in post.tags.all %}
+                                        <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
+                                    {% endfor %}
+                                </span>
+                            <br/>
+                            {% endif %}
+                            <span>Views: {{ post.views }}</span>
+                            <br/>
+                        </div>
+                        <p>
+                            {{ post.content|safe }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="commententries wrap">
+                    <h3 class="commententries__main-title">Comments</h3>
+
+                    <ul class="commententries__commentlist">
+                        <li>
+                            <article class="commententries__comment">
+                                <header class="commententries__author">
+                                    <img src="img/author-1.jpg" alt="">
+                                </header>
+                                <section class="commententries__details">
+                                    <div class="commententries__name-date">
+                                        <h5><a href="#">Selina Gomez</a></h5>
+                                        <p>February 25 2017</p>
+                                    </div>
+                                    <div class="commententries__body">
+                                        <p>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </p>
+                                    </div>
+                                    <div class="commententries__review">
+                                        <p><span><a href="#" class="commententries__like"><i class="fa-sharp fa-solid fa-thumbs-up"></i></a><span class="commententries__like-num">12</span></span><span><a href="#" class="commententries__reply"><i class="fa-solid fa-reply"></i></a><span class="commententries__reply-num">7</span></span></p>
+                                    </div>
+                                </section>
+                            </article>
+                        </li>
+
+                        <ul class="commententries__children">
+                            <li>
+                                <article class="commententries__comment">
+                                    <header class="commententries__author">
+                                        <img src="img/author-2.jpg" alt="">
+                                    </header>
+                                    <section class="commententries__details">
+                                        <div class="commententries__name-date">
+                                            <h5><a href="#">Khalid Hasan Zibon</a></h5>
+                                            <p>February 25 2017</p>
+                                        </div>
+                                        <div class="commententries__body">
+                                            <p>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </p>
+                                        </div>
+                                        <div class="commententries__review">
+                                            <p><span><a href="#" class="commententries__like"><i class="fa-sharp fa-solid fa-thumbs-up"></i></a><span class="commententries__like-num">12</span></span><span><a href="#" class="commententries__reply"><i class="fa-solid fa-reply"></i></a><span class="commententries__reply-num">7</span></span></p>
+                                        </div>
+                                    </section>
+                                </article>
+                            </li>
+                        </ul>
+
+                        <li>
+                            <article class="commententries__comment">
+                                <header class="commententries__author">
+                                    <img src="img/author-3.jpg" alt="">
+                                </header>
+                                <section class="commententries__details">
+                                    <div class="commententries__name-date">
+                                        <h5><a href="#">Heath Ledger</a></h5>
+                                        <p>February 25 2017</p>
+                                    </div>
+                                    <div class="commententries__body">
+                                        <p>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </p>
+                                    </div>
+                                    <div class="commententries__review">
+                                        <p><span><a href="#" class="commententries__like"><i class="fa-sharp fa-solid fa-thumbs-up"></i></a><span class="commententries__like-num">12</span></span><span><a href="#" class="commententries__reply"><i class="fa-solid fa-reply"></i></a><span class="commententries__reply-num">7</span></span></p>
+                                    </div>
+                                </section>
+                            </article>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <form action="#" method="get" class="form">
+                    <div class="form__name">
+                        <input type="text" name="" placeholder="Name" class="name">
+                    </div>
+                    <div class="form__email">
+                        <input type="email" name="" placeholder="Email" class="email">
+                    </div>
+                    <div class="form__comment">
+                        <input type="text" name="" placeholder="Comment" class="comment">
+                    </div>
+                    <div class="form__post">
+                        <input type="submit" value="Post">
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="portfolio wrap">
+<!--                <div class="portfolio__button-group">-->
+<!--                    <button class="portfolio__button is-active">Recent</button>-->
+<!--                    <button class="portfolio__button">popular</button>-->
+<!--                    <button class="portfolio__button">Users</button>-->
+<!--                </div>-->
+                <div class="portfolio__newsletter">
+                    <h2 class="portfolio__newsletter-title">Search</h2>
+                    <form action="{% url 'search' %}" method="get">
+                        <input class="portfolio__email" type="text" name="s" placeholder="Find what you want..">
+                        <input class="portfolio__submit" type="submit" value="Search">
+                    </form>
+                </div>
+
+                {% get_popular 3 %}
+
+                {% get_recent 3 %}
+
+                {% get_tags %}
+
+            </div>
+
+        </section>
+
+{% endblock %}

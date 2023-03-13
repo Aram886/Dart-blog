@@ -1,0 +1,16 @@
+<h2 class="portfolio__newsletter-title">Popular</h2>
+<div class="portfolio__blocks">
+    {% for post in posts %}
+    <div class="portfolio__item">
+        {% if post.photo %}
+            <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+        {% else %}
+            <img src="https://picsum.photos/350/300" alt="{{ post.title }}">
+        {% endif %}
+        <div class="portfolio__text">
+            <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+            <p>{{ post.author }}<span>|</span>{{ post.created_at|timeuntil }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>

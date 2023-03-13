@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title  %}
+    {{ title }} -- {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="design-wrap wrap">
+            <section class="design">
+                <div class="design__text">
+                    <h3>Classic BLOG Design</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla
+                    </p>
+                </div>
+            </section>
+        </div>
+    <section class="card wrap">
+
+            <div class="card__block">
+                <div class="card__image">
+                    <img src="{% static 'img/post-image1.jpg' %}" alt>
+                </div>
+                <div class="card__big-text">
+                    <h3><a href="#">Post Title Goes Here.</a></h3>
+                    <p class="card__paragraph-top">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                    <p class="card__paragraph-down">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                    </p>
+                    <h4><span class="card__date post-date">25 February 2017</span><span class="card__posted-by">Posted By:</span><span class="card__author">Kabbo Liate</span></h4>
+                </div>
+            </div>
+
+            <div class="card__post-block">
+                {% for post in posts %}
+                    <div class="card__post">
+                        {% if post.photo %}
+                            <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="https://picsum.photos/350/300" alt="{{ post.title }}">
+                        {% endif %}
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                        <h4 class="card__post-info">
+                            <span class="card__posted-by">Posted By:</span><span class="card__span-author">{{ post.author }}</span>
+                        </h4>
+                        {% autoescape off %}
+                            <p>{{ post.content|truncatewords_html:"20" }}</p>
+                        {% endautoescape %}
+                        <h4><span class="card__date post-date">{{ post.created_at|date:"j M Y" }}</span></h4>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% include "inc/_pagination.html" %}
+
+        </section>
+
+{% endblock %}
+
+
+
+
+

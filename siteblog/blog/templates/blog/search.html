@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title  %}
+    {{ title }} Search -- {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    <section class="card wrap">
+
+         <div class="card__post-block">
+                {% for post in posts %}
+                    <div class="card__post">
+                        {% if post.photo %}
+                            <img src="{{ post.photo.url }}" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="https://picsum.photos/350/300" alt="{{ post.title }}">
+                        {% endif %}
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                        <h4 class="card__post-info">
+                            <span class="card__posted-by">Posted By:</span><span class="card__span-author">{{ post.author }}</span>
+                        </h4>
+                        {% autoescape off %}
+                            <p>{{ post.content|truncatewords_html:"20" }}</p>
+                        {% endautoescape %}
+                        <h4><span class="card__date post-date">{{ post.created_at|date:"j M Y" }}</span></h4>
+                    </div>
+                     {%  empty %}
+                        <p class="search-error" style="font-size: 4rem">We could not</p>
+                         <p class="search-error" style="font-size: 4rem">anything by</p>
+                         <p class="search-error" style="font-size: 4rem">your request</p>
+                         <p class="search-error" style="font-size: 4rem">-_(-)_(-)_- </p>
+                {% endfor %}
+            </div>
+
+        {% if page_obj.has_other_pages %}
+
+            <div class="pagination">
+                <div class="nav-links">
+                    {% if page_obj.has_previous %}
+                        <a class="page-numbers" href="?{{ s }}page={{ page_obj.previous_page_number }}">&#10094</a>
+                    {% endif %}
+
+                    {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <span class="page-numbers current">{{ p }}</span>
+                        {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:+3 %}
+                            <a class="page-numbers" href="?{{ s }}page={{ p }}">{{ p }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a class="page-numbers" href="?{{ s }}page={{ page_obj.next_page_number }}">&#10095</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+
+
+
+
+
